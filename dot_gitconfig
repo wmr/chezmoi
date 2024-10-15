@@ -1,0 +1,54 @@
+[user]
+	name = wmr
+	email = wmr101@gmail.com
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool "mvimdiff"]
+    cmd = /usr/local/bin/mvim -f -d \"$LOCAL\" \"$REMOTE\"
+[difftool "vscode"]
+    cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
+[diff]
+    tool = vscode
+[difftool]
+    prompt = false
+[mergetool "Kaleidoscope"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+    trustExitCode = true
+[mergetool "vscode"]
+    cmd = code --wait \"$MERGED\"
+[mergetool]
+    prompt = false
+[merge]
+    tool = vscode
+[filter "media"]
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
+[github]
+    user = wmr
+[core]
+    autocrlf = input
+    safecrlf = true
+	quotepath = false
+	editor = code --wait
+[color]
+    status = auto
+    branch = auto
+    interactive = auto
+    diff = auto
+[alias]
+    st = status
+    unstage = rm --cached
+	co = commit
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	aa = add --all
+[credential]
+	helper = osxkeychain
+[push]
+    default = simple
+[init]
+	defaultBranch = master
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

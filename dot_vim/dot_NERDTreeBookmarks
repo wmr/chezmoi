@@ -1,0 +1,8 @@
+dotfiles-repo ~/.homesick/repos/dotfiles
+Src ~/Src
+desktop ~/Desktop
+.vim ~/.vim
+dropbox ~/Dropbox
+projects ~/Src/projects
+
+shared-Src /Volumes/Src

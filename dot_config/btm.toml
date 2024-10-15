@@ -1,0 +1,9 @@
+[execution]
+cmd = "cp"
+pattern = "-vdRln {{.Source}} {{.Target}}"
+
+[targets.movie]
+path = "/volume1/Downloads/Movies"
+
+[targets.tv]
+path = "/volume1/Downloads/Series"

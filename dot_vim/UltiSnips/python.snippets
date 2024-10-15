@@ -1,0 +1,71 @@
+# overwrite default snippets
+priority -49
+
+#! header // use python2.7 by def
+snippet #! "Shebang header for python2.7 scripts" b
+#!/usr/bin/env python2.7
+# encoding: utf-8
+$0
+endsnippet
+
+snippet #!3 "Sheband header for python3 scripts" b
+#!/usr/bin/env python3
+# encoding: utf-8
+$0
+endsnippet
+
+snippet head "Python header" b
+#  ${1:<project name>}
+#  `!v @%`
+#
+#  Created by ${2:`!v g:snips_author`} on `!v strftime("%Y-%m-%d")`.
+#  Copyright `!v strftime("%Y")` ${2:`!v g:snips_author`}. All Rights Reserved.
+#
+$0
+endsnippet
+
+#
+# __future__
+#
+
+snippet impfu "Import modules from __future__" b
+from __future__ import print_function, absolute_import
+$0
+endsnippet
+
+#
+# argparse
+#
+
+snippet parseargs "Argument parser function" b
+
+def parse_args():
+	'''Parse command line arguments
+	:returns: the parsed arguments object
+	'''
+	from argparse import ArgumentParser
+
+	${1:parser} = ArgumentParser(description='${2:command line tool}')
+	$0
+	return $1.parse_args()
+endsnippet
+
+snippet addarg "Add argument to argparse" b
+${1:parser}.add_argument('-${2:o}', '--${3:opt}'${4})
+$0
+endsnippet
+
+snippet addparg "Add positional argument to argparse" b
+${1:parser}.add_argument('${2:name}'${3})
+$0
+endsnippet
+
+snippet addargio "File input/output arguments" b
+from argparse import FileType
+from sys import stdin, stdout
+${1:parser}.add_argument('infile', nargs='?', type=${2:FileType}('r'),
+					default=stdin)
+$1.add_argument('-${3:o}' '--${4:outfile}', nargs='?', type=$2('w'),
+					default=stdout)
+$0
+endsnippet

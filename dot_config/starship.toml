@@ -1,0 +1,35 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+scan_timeout = 10
+
+[character] # The name of the module we are configuring is "character"
+success_symbol = "[❯](bold purple)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+
+[username]
+format = '[$user]($style)'
+
+[hostname]
+ssh_symbol = '@'
+format = '[$ssh_symbol](bold gray)[$hostname](bold gray) '
+
+[gcloud]
+disabled = true
+
+[swift]
+disabled = true
+
+[git_metrics]
+disabled = false
+
+[golang]
+disabled = false
+format = "via [🏎💨 $version](bold cyan) "
+
+[dotnet]
+disabled = true
+
+[battery]
+disabled = true

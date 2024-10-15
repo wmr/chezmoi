@@ -1,0 +1,6 @@
+BasedOnStyle: Mozilla
+AlignAfterOpenBracket: BlockIndent
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
