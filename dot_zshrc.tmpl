@@ -1,0 +1,20 @@
+#
+# .zshrc
+#
+# (c) 2017 wmr <wmr101@gmail.com>
+#
+
+
+#
+# Bundles & custom settings
+# This is much faster than zplug, albeit not very elegant
+#
+
+{{- if eq .chezmoi.os "darwin" }}
+source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+{{- else }}
+source ${HOME}/.antidote/antidote.zsh
+{{- end }}
+antidote load
+
+eval "$(starship init zsh)"

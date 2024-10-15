@@ -1,0 +1,37 @@
+# prefer vi edit mode
+{{- if eq .chezmoi.os "darwin" }}
+set editing-mode=vi
+{{ end }}
+
+"\e[1~": beginning-of-line        # C-a
+"\e[4~": end-of-line              # C-e
+
+$if mode=emacs
+    "\e[1~": beginning-of-line        # C-a
+    "\e[4~": end-of-line              # C-e
+    "\e[5~": history-search-backward  # PgUp
+    "\e[6~": history-search-forward   # PgDn
+    "\e[3~": delete-char              # Del
+    "\e[2~": quoted-insert            # C-v
+    "\e[5C": forward-word             # C-Right
+    "\e[5D": backward-word            # C-Left
+    #"\e\e[C": forward-word
+    #"\e\e[D": backward-word
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
+$endif
+
+set completion-ignore-case on # ignore case in completions
+set expand-tilde off          # do not expand ~
+set show-all-if-ambiguous on
+set visible-stats on
+
+# UTF-8 accent fixes
+set meta-flag on
+set convert-meta off
+set input-meta on
+set output-meta on
+
+# bell style: visible only
+set bell-style visible
+

@@ -1,0 +1,15 @@
+mafredri/zsh-async
+zsh-users/zsh-completions
+"${HOME}/.zsh/completion"
+"${HOME}/.zsh/custom"
+
+#romkatv/zsh-bench kind:path
+olets/zsh-abbr    kind:defer
+
+Tarrasch/zsh-autoenv
+
+#mattmc3/zfunctions
+zsh-users/zsh-autosuggestions
+zdharma-continuum/fast-syntax-highlighting kind:defer
+zsh-users/zsh-history-substring-search
+

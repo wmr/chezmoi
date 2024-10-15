@@ -1,0 +1,16 @@
+[ui]
+username = wmr <wmr101@gmail.com>
+merge = Kaleidoscope
+
+[extensions]
+hgext.extdiff=
+#hgext.forest=
+
+
+[extdiff]
+cmd.ksdiff = /usr/local/bin/ksdiff
+opts.ksdiff = --changeset --wait --filelist
+
+[merge-tools]
+Kaleidoscope.executable = /usr/local/bin/ksdiff
+Kaleidoscope.args = --merge --output $output --base $base -- $local $other

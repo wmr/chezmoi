@@ -1,0 +1,20 @@
+font:
+  size: 15.0
+  normal: 
+    family: MonoLisa
+
+window:
+  opacity: .85
+
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+
+mouse:
+  hints:
+    modifiers: Control 
+
+shell:
+  program: "/bin/zsh"
+  args: 
+    - --login
