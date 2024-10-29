@@ -1,0 +1,18 @@
+[font]
+size = 15.0
+
+[font.normal]
+family = "MonoLisa Nerd Font Mono"
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+[terminal.shell]
+args = ["--login"]
+program = "/bin/zsh"
+
+[window]
+opacity = 0.95
+
+[terminal]

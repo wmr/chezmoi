@@ -65,14 +65,17 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-require'rust-tools'.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      vim.keymap.set("n", "<C-space>", self.hover_actions.hover_actions, { buffer = bufnr })
-      vim.keymap.set("n", "<Leader>a", self.code_action_group.code_action_group, { buffer = bfnr })
-    end,
-  },
-})
+local ls = require'luasnip'
+
+vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
+vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+
+vim.keymap.set({"i", "s"}, "<C-E>", function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
+end, {silent = true})
 
 require'nvim-tree'.setup({
   sort_by = "case_sensitive",
@@ -83,6 +86,7 @@ require'nvim-tree'.setup({
     dotfiles = true,
   },
 })
+
 
 local ctp_feline = require('catppuccin.groups.integrations.feline')
 
@@ -95,8 +99,8 @@ cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
       -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
       -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
     end,
@@ -114,8 +118,8 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
+    -- { name = 'vsnip' }, -- For vsnip users.
+    { name = 'luasnip' }, -- For luasnip users.
     -- { name = 'ultisnips' }, -- For ultisnips users.
     -- { name = 'snippy' }, -- For snippy users.
   }, {
@@ -158,18 +162,29 @@ require'lspconfig'['gopls'].setup {
 }
 require'lspconfig'['ols'].setup({})
 require'lspconfig'['clangd'].setup({
-  server =  {
+  server = {
     on_attach = function(_, bufnr) 
       local bufopts = { noremap = true, silent = true, buffer = bufnr }
       vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
     end
   }
 })
-require'lspconfig'['zls'].setup({})
+require'lspconfig'['zls'].setup({
+  build_on_save_step = "check"
+})
 require'lspconfig'['pyright'].setup({})
 
 require'feline'.setup({
   components = ctp_feline.get(),
+})
+
+require'rust-tools'.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      vim.keymap.set("n", "<C-space>", self.hover_actions.hover_actions, { buffer = bufnr })
+      vim.keymap.set("n", "<Leader>a", self.code_action_group.code_action_group, { buffer = bfnr })
+    end,
+  },
 })
 
 require'go'.setup()
@@ -222,25 +237,15 @@ require'oil'.setup({
   },
 })
 
-vim.keymap.set({"n", "x"}, "<leader>rr", 
-  function() require('telescope').extensions.refactoring.refactors() 
-  end)
+require'flash'.treesitter({})
 
--- Cmd+C / Cmd+V bindings
+-- Cmd+V paste
 vim.g.neovide_input_use_logo = 1
-vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.cmd("set clipboard^=unnamed,unnamedplus")
+vim.api.nvim_set_keymap('n', '<D-v>', '"*p',{ noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<D-s>', ':w<CR>',{ noremap = true, silent = true})
 
-
-vim.cmd('colo catppuccin')
-vim.cmd('set ts=2 sts=2 sw=2')
-vim.opt.guifont = 'JetBrainsMono\\ Nerd\\ Font\\ Mono:h15'
-vim.opt.expandtab = true
-vim.opt.smartcase = true
-vim.opt.ignorecase = true
-
+-- Move line with Alt+j/k (MacOS)
 vim.keymap.set("v", "∆", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "˚", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "∆", ":m .+1<CR>")
@@ -252,4 +257,12 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+vim.cmd('colo catppuccin')
+vim.cmd('set ts=2 sts=2 sw=2')
+vim.opt.guifont = 'JetBrainsMono\\ Nerd\\ Font\\ Mono:h15'
+vim.opt.expandtab = true
+vim.opt.smartcase = true
+vim.opt.ignorecase = true
+
 
