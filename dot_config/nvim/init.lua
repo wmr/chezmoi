@@ -188,7 +188,6 @@ require'rust-tools'.setup({
 })
 
 require'go'.setup()
-require'navigator'.setup()
 require'feline'.winbar.setup()
 require'gitsigns'.setup {
   signs = {

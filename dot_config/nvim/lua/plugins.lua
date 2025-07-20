@@ -18,54 +18,76 @@ require("lazy").setup({
   { "hrsh7th/cmp-buffer" },
   { "hrsh7th/cmp-path" },
   { "hrsh7th/cmp-cmdline" },
-  { "hrsh7th/nvim-cmp" },              -- completion engine (lua)
-  { 
+  { "hrsh7th/nvim-cmp" }, -- completion engine (lua)
+  {
     "stevearc/oil.nvim",
     ---@module "oil"
     ---@type oil.SetupOpts
     opts = {},
-    dependencies = {{ "echasnovski/mini.icons", opts = {} }},
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
   },
-  { 
-    "nvim-telescope/telescope.nvim",  -- fuzzy finder
+  {
+    "nvim-telescope/telescope.nvim", -- fuzzy finder
     dependencies = { "nvim-lua/plenary.nvim" }
   },
   { "nvim-tree/nvim-tree.lua" },     -- file explorer
   { "nvim-tree/nvim-web-devicons" }, -- dev icons
   { "mfussenegger/nvim-dap" },       -- debugging
-  { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
-  { "catppuccin/nvim", name = "catppuccin" },
-  { "feline-nvim/feline.nvim"},      -- status line
+  { "rcarriga/nvim-dap-ui",       dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
+  { "catppuccin/nvim",            name = "catppuccin" },
+  { "feline-nvim/feline.nvim" }, -- status line
   { "folke/tokyonight.nvim" },
-  { "folke/which-key.nvim", lazy = true },
-  { 
+  { "folke/which-key.nvim",       lazy = true },
+  {
     "folke/flash.nvim",
     event = "VeryLazy",
     ---@type Flash.Config
     opts = {},
     -- stylua: ignore
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
     },
   },
-  { 
+  {
     "L3MON4D3/LuaSnip",
     -- follow latest release.
     version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
     -- install jsregexp (optional!).
     build = "make install_jsregexp"
   },
+  { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
   "saadparwaiz1/cmp_luasnip",
   "nvim-treesitter/nvim-treesitter", -- advanced syntax highlighting
   "HiPhish/rainbow-delimiters.nvim",
-  "folke/neodev.nvim",               -- assist for wrinting NeoVim config in Lua
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+  {                                        -- optional cmp completion source for require statements and module annotations
+    "hrsh7th/nvim-cmp",
+    opts = function(_, opts)
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, {
+        name = "lazydev",
+        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+      })
+    end,
+  },
   { "folke/neoconf.nvim", cmd = "Neoconf" },
   "lewis6991/gitsigns.nvim",
-  { 
+  {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
@@ -90,11 +112,12 @@ require("lazy").setup({
       "neovim/nvim-lspconfig"
     }
   },
-  "ray-x/guihua.lua",                -- tools for developing plugins
+  "sindrets/diffview.nvim",
+  "ray-x/guihua.lua", -- tools for developing plugins
   "ray-x/navigator.lua",
   {
     "ray-x/go.nvim",
-    dependencies = {  -- optional packages
+    dependencies = { -- optional packages
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
@@ -102,13 +125,13 @@ require("lazy").setup({
     config = function()
       require("go").setup()
     end,
-    event = {"CmdlineEnter"},
-    ft = {"go", 'gomod'},
+    event = { "CmdlineEnter" },
+    ft = { "go", 'gomod' },
     build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   },
   {
     "OXY2DEV/markview.nvim",
-    lazy = false,      -- Recommended
+    lazy = false, -- Recommended
     -- ft = "markdown" -- If you decide to lazy-load anyway
 
     dependencies = {
